@@ -1,17 +1,30 @@
 <?php
 
-//Variabelen vullen
 $attractie = $_POST['attractie'];
-$capaciteit = $_POST['capaciteit']; 
+if (empty($attractie)) $errors[] = 'Attractie is verplicht';
+
+$type = $_POST['type'];
+$capaciteit = $_POST['capaciteit'];
 $melder = $_POST['melder'];
+$prioriteit = isset($_POST['prioriteit']) ? 1 : 0;
+$overig = $_POST['overig'];
 
-echo $attractie . " / " . $capaciteit . " / " . $melder;
-
-//1. Verbinding
 require_once 'conn.php';
 
-//2. Query
+$query = "
+INSERT INTO meldingen (attractie, type, capaciteit, prioriteit, melder, overige_info)
+VALUES (:attractie, :type, :capaciteit, :prioriteit, :melder, :overige_info)";
 
-//3. Prepare
+$statement = $conn->prepare($query);
+$statement->execute([
+    ':attractie' => $attractie,
+    ':type' => $type,
+    ':capaciteit' => $capaciteit,
+    ':prioriteit' => $prioriteit,
+    ':melder' => $melder,
+    ':overige_info' => $overig
+]);
 
-//4. Execute
+$items = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+header("Location: ../meldingen/index.php?msg=Melding opgeslagen");

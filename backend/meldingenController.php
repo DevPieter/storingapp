@@ -1,8 +1,6 @@
 <?php
 
 $attractie = $_POST['attractie'];
-if (empty($attractie)) $errors[] = 'Attractie is verplicht';
-
 $type = $_POST['type'];
 $capaciteit = $_POST['capaciteit'];
 $melder = $_POST['melder'];

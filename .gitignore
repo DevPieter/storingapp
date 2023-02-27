@@ -3,4 +3,5 @@
 # Useful .gitignore templates: https://github.com/github/gitignore
 
 backend/config.php
+backend/config_test.php
 .idea
